@@ -12,7 +12,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^5.4 | ^7.0"
+        "php": "^5.4 | ^7.0",
+        "rebelcode/session-generator-interface": "dev-task/initial-interfaces",
+        "dhii/validation-interface": "^0.1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
@@ -22,11 +24,17 @@
     },
     "autoload": {
         "psr-4": {
-            "RebelCode\\Session\\": "src"
+            "RebelCode\\Sessions\\": "src"
         }
     },
     "scripts": {
         "test": "phpunit",
         "csfix": "php-cs-fixer fix -vvv"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/RebelCode/session-generator-interface"
+        }
+    ]
 }
