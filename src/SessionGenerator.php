@@ -2,7 +2,6 @@
 
 namespace RebelCode\Sessions;
 
-use DateTimeInterface;
 use Dhii\Validation\Exception\ValidationFailedExceptionInterface;
 use Dhii\Validation\ValidatorInterface;
 use Traversable;
@@ -236,10 +235,10 @@ class SessionGenerator implements SessionGeneratorInterface
      *
      * @since [*next-version*]
      */
-    public function generate(DateTimeInterface $start, DateTimeInterface $end)
+    public function generate($start, $end)
     {
         $results = [];
-        $this->_generate($start->getTimestamp(), $end->getTimestamp(), $results);
+        $this->_generate($start, $end, $results);
 
         return $results;
     }
