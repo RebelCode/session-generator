@@ -54,16 +54,16 @@ class SessionGenerator implements SessionGeneratorInterface
      *
      * @since [*next-version*]
      *
+     * @param callable                $sessionFactory Optional session factory callback.
      * @param int[]|Traversable       $lengths        The session lengths.
      * @param int                     $padding        Optional padding time.
      * @param ValidatorInterface|null $validator      Optional validator instance.
-     * @param callable|null           $sessionFactory Optional session factory callback.
      */
     public function __construct(
+        callable $sessionFactory,
         $lengths,
         $padding = 0,
-        ValidatorInterface $validator = null,
-        callable $sessionFactory = null
+        ValidatorInterface $validator = null
     ) {
         $this->_setSessionLengths($lengths)
              ->_setPaddingTime($padding)
@@ -198,11 +198,11 @@ class SessionGenerator implements SessionGeneratorInterface
      *
      * @since [*next-version*]
      *
-     * @param callable|null $sessionFactory The session factory callback.
+     * @param callable $sessionFactory The session factory callback.
      *
      * @return $this
      */
-    protected function _setSessionFactory(callable $sessionFactory = null)
+    protected function _setSessionFactory(callable $sessionFactory)
     {
         $this->sessionFactory = $sessionFactory;
 
@@ -217,15 +217,11 @@ class SessionGenerator implements SessionGeneratorInterface
      * @param int $start The start timestamp for the session.
      * @param int $end   The end timestamp for the session.
      *
-     * @return SessionInterface A session instance.
+     * @return mixed The created session.
      */
     protected function _createSession($start, $end)
     {
         $factory = $this->_getSessionFactory();
-
-        if (is_null($factory)) {
-            return new Session($start, $end);
-        }
 
         return call_user_func_array($factory, [$start, $end]);
     }

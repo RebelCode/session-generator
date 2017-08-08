@@ -3,15 +3,33 @@
 namespace RebelCode\Sessions\UnitTest;
 
 use DateTime;
-use RebelCode\Sessions\Session;
 use RebelCode\Sessions\SessionGenerator;
 use Xpmock\TestCase;
 
 class SessionGeneratorTest extends TestCase
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @since [*next-version*]
+     */
     public static function setUpBeforeClass()
     {
         date_default_timezone_set('UTC');
+    }
+
+    /**
+     * Creates a session factory for testing purposes.
+     *
+     * @since [*next-version*]
+     *
+     * @return callable
+     */
+    public function createSessionFactory()
+    {
+        return function($start, $end) {
+            return [$start, $end];
+        };
     }
 
     /**
@@ -21,7 +39,7 @@ class SessionGeneratorTest extends TestCase
      */
     public function testCanBeCreated()
     {
-        $subject = new SessionGenerator(0);
+        $subject = new SessionGenerator($this->createSessionFactory(), 0);
 
         $this->assertInstanceOf(
             'RebelCode\\Sessions\\SessionGeneratorInterface', $subject,
@@ -37,13 +55,11 @@ class SessionGeneratorTest extends TestCase
     public function testGenerate()
     {
         // 10 minute long sessions
-        $subject = new SessionGenerator([600], 0, null, function($start, $end) {
-            return [$start, $end];
-        });
-        $start    = new DateTime('01/08/2017 02:00');
-        $end      = new DateTime('01/08/2017 03:00');
-        $t        = $start->getTimestamp();
+        $subject = new SessionGenerator($this->createSessionFactory(), [600], 0, null);
+        $start    = strtotime('01/08/2017 02:00');
+        $end      = strtotime('01/08/2017 03:00');
         $sessions = $subject->generate($start, $end);
+        $t        = $start;
 
         $expected = [
             [$t +     0, $t +  600],
