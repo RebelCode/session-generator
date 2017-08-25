@@ -27,7 +27,7 @@ class SessionGeneratorTest extends TestCase
      */
     public function createSessionFactory()
     {
-        return function($start, $end) {
+        return function ($start, $end) {
             return [$start, $end];
         };
     }
@@ -56,20 +56,20 @@ class SessionGeneratorTest extends TestCase
     {
         // 10 minute long sessions
         $subject = new SessionGenerator($this->createSessionFactory(), [600], 0, null);
-        $start    = strtotime('01/08/2017 02:00');
-        $end      = strtotime('01/08/2017 03:00');
+        $start = strtotime('01/08/2017 02:00');
+        $end = strtotime('01/08/2017 03:00');
         $sessions = $subject->generate($start, $end);
-        $t        = $start;
+        $t = $start;
 
         $expected = [
-            [$t +     0, $t +  600],
-            [$t +   600, $t + 1200],
-            [$t +  1200, $t + 1800],
-            [$t +  1800, $t + 2400],
-            [$t +  2400, $t + 3000],
-            [$t +  3000, $t + 3600],
+            [$t + 0, $t + 600],
+            [$t + 600, $t + 1200],
+            [$t + 1200, $t + 1800],
+            [$t + 1800, $t + 2400],
+            [$t + 2400, $t + 3000],
+            [$t + 3000, $t + 3600],
         ];
 
-        $this->assertEquals($expected, $sessions,'',0, 10, true);
+        $this->assertEquals($expected, $sessions, '', 0, 10, true);
     }
 }
