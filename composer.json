@@ -13,7 +13,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^5.4 | ^7.0",
-        "rebelcode/session-generator-interface": "dev-task/initial-interfaces",
+        "rebelcode/session-generator-interface": "dev-develop",
         "dhii/validation-interface": "^0.1.0",
         "dhii/exception-helper-base": "dev-task/initial-classes",
         "dhii/i18n-helper-base": "dev-develop"

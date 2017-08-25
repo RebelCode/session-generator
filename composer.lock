@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b0b0d9a858730c75e9894743409ba0a",
+    "content-hash": "5f03390846f5d504192fd3587f22fc05",
     "packages": [
         {
             "name": "dhii/exception",
@@ -311,16 +311,16 @@
         },
         {
             "name": "rebelcode/session-generator-interface",
-            "version": "dev-task/initial-interfaces",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RebelCode/session-generator-interface.git",
-                "reference": "b0a1045a8169a7f74506229f4e088ff060d7d4b3"
+                "reference": "74c197f6c5849601ca76c36fcfb696677ae44e39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RebelCode/session-generator-interface/zipball/b0a1045a8169a7f74506229f4e088ff060d7d4b3",
-                "reference": "b0a1045a8169a7f74506229f4e088ff060d7d4b3",
+                "url": "https://api.github.com/repos/RebelCode/session-generator-interface/zipball/74c197f6c5849601ca76c36fcfb696677ae44e39",
+                "reference": "74c197f6c5849601ca76c36fcfb696677ae44e39",
                 "shasum": ""
             },
             "require": {
@@ -357,10 +357,10 @@
             ],
             "description": "Interfaces for objects that are capable of generating sessions.",
             "support": {
-                "source": "https://github.com/RebelCode/session-generator-interface/tree/task/initial-interfaces",
+                "source": "https://github.com/RebelCode/session-generator-interface/tree/develop",
                 "issues": "https://github.com/RebelCode/session-generator-interface/issues"
             },
-            "time": "2017-08-08 07:09:11"
+            "time": "2017-08-12 11:21:29"
         }
     ],
     "packages-dev": [
@@ -473,7 +473,7 @@
                 "source": "https://github.com/Dhii/invocable-interface/tree/task/initial-interfaces",
                 "issues": "https://github.com/Dhii/invocable-interface/issues"
             },
-            "time": "2017-03-30T11:23:27+00:00"
+            "time": "2017-03-30 11:23:27"
         },
         {
             "name": "dhii/php-cs-fixer-config",
