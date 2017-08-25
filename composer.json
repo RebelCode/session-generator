@@ -22,7 +22,9 @@
         "phpunit/phpunit": "^4.8",
         "ptrofimov/xpmock": "^1.1",
         "dhii/php-cs-fixer-config": "^0.1",
-        "codeclimate/php-test-reporter": "<=0.3.2"
+        "codeclimate/php-test-reporter": "<=0.3.2",
+        "dhii/validation-base": "^0.1",
+        "dhii/invocable-interface": "dev-task/initial-interfaces"
     },
     "autoload": {
         "psr-4": {
@@ -37,6 +39,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/RebelCode/session-generator-interface"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/Dhii/invocable-interface"
         }
     ]
 }

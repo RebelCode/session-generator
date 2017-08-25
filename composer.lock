@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f835570572be8499f9d668c9ad171d49",
+    "content-hash": "4b0b0d9a858730c75e9894743409ba0a",
     "packages": [
         {
             "name": "dhii/exception",
@@ -423,6 +423,59 @@
             "time": "2016-04-19T16:54:33+00:00"
         },
         {
+            "name": "dhii/invocable-interface",
+            "version": "dev-task/initial-interfaces",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Dhii/invocable-interface.git",
+                "reference": "2bc2797567a4be4a4f92dfbcb2f822cee4cf01c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Dhii/invocable-interface/zipball/2bc2797567a4be4a4f92dfbcb2f822cee4cf01c1",
+                "reference": "2bc2797567a4be4a4f92dfbcb2f822cee4cf01c1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 | ^7.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "<=0.3.2",
+                "dhii/php-cs-fixer-config": "dev-php-5.3",
+                "phpunit/phpunit": "^4.8",
+                "ptrofimov/xpmock": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dhii\\Util\\Invocation\\": "src"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit"
+                ],
+                "csfix": [
+                    "php-cs-fixer fix -vvv"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dhii Team",
+                    "email": "development@dhii.co"
+                }
+            ],
+            "description": "Interface for objects that can be invoked.",
+            "support": {
+                "source": "https://github.com/Dhii/invocable-interface/tree/task/initial-interfaces",
+                "issues": "https://github.com/Dhii/invocable-interface/issues"
+            },
+            "time": "2017-03-30T11:23:27+00:00"
+        },
+        {
             "name": "dhii/php-cs-fixer-config",
             "version": "v0.1",
             "source": {
@@ -462,6 +515,96 @@
             ],
             "description": "A default PHP CS Fixer config implementation",
             "time": "2017-07-23T12:53:27+00:00"
+        },
+        {
+            "name": "dhii/validation-abstract",
+            "version": "v0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Dhii/validation-abstract.git",
+                "reference": "ff8fc7068b6511ae2cdd300c74bf9b7bfabc61c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Dhii/validation-abstract/zipball/ff8fc7068b6511ae2cdd300c74bf9b7bfabc61c2",
+                "reference": "ff8fc7068b6511ae2cdd300c74bf9b7bfabc61c2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 | ^7.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "<=0.3.2",
+                "dhii/php-cs-fixer-config": "dev-php-5.3",
+                "dhii/validation-interface": "^0.1",
+                "phpunit/phpunit": "^4.8",
+                "ptrofimov/xpmock": "^1.1"
+            },
+            "suggest": {
+                "dhii/validation-interface": "Needed to be able to create exceptions that are expected to be thrown"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dhii\\Validation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dhii Team",
+                    "email": "development@dhii.co"
+                }
+            ],
+            "description": "Common abstract functionality for validation.",
+            "time": "2017-03-26T15:18:42+00:00"
+        },
+        {
+            "name": "dhii/validation-base",
+            "version": "v0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Dhii/validation-base.git",
+                "reference": "21b5d2e50f7b35b056409985dcefdfee58f4e411"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Dhii/validation-base/zipball/21b5d2e50f7b35b056409985dcefdfee58f4e411",
+                "reference": "21b5d2e50f7b35b056409985dcefdfee58f4e411",
+                "shasum": ""
+            },
+            "require": {
+                "dhii/validation-abstract": "^0.1",
+                "dhii/validation-interface": "^0.1",
+                "php": "^5.3 | ^7.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "<=0.3.2",
+                "dhii/php-cs-fixer-config": "dev-php-5.3",
+                "phpunit/phpunit": "^4.8",
+                "ptrofimov/xpmock": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dhii\\Validation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dhii Team",
+                    "email": "development@dhii.co"
+                }
+            ],
+            "description": "Base concrete functionality for validation.",
+            "time": "2017-03-26T19:00:41+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -2213,7 +2356,8 @@
     "stability-flags": {
         "rebelcode/session-generator-interface": 20,
         "dhii/exception-helper-base": 20,
-        "dhii/i18n-helper-base": 20
+        "dhii/i18n-helper-base": 20,
+        "dhii/invocable-interface": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
