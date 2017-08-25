@@ -41,9 +41,9 @@ trait ValidatorAwareTrait
      *
      * @param ValidatorInterface|null $validator The validator instance to set.
      *
-     * @return $this
-     *
      * @throws InvalidArgumentException If the argument is not null and not a valid validator instance.
+     *
+     * @return $this
      */
     protected function _setValidator($validator)
     {

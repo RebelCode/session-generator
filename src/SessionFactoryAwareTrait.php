@@ -2,7 +2,6 @@
 
 namespace RebelCode\Sessions;
 
-use Dhii\Validation\ValidatorInterface;
 use Exception;
 use InvalidArgumentException;
 

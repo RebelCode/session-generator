@@ -22,8 +22,8 @@ trait CalculateSessionLengthsCapableTrait
      */
     protected function _calculateSessionLengths($min, $max, $step)
     {
-        $lengths  = [];
-        $range    = $max - $min;
+        $lengths = [];
+        $range   = $max - $min;
         for ($i = 0; $i <= $range; $i += $step) {
             $lengths[] = min($min + $i, $max);
         }
