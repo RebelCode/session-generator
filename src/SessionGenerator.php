@@ -9,8 +9,47 @@ use Traversable;
 
 class SessionGenerator extends AbstractSessionGenerator implements SessionGeneratorInterface
 {
+    /*
+     * Provides session length awareness.
+     *
+     * @since [*next-version*]
+     */
+    use SessionLengthsAwareTrait;
+
+    /*
+     * Provides padding time awareness.
+     *
+     * @since [*next-version*]
+     */
+    use PaddingTimeAwareTrait;
+
+    /*
+     * Provides session factory awareness.
+     *
+     * @since [*next-version*]
+     */
+    use SessionFactoryAwareTrait;
+
+    /*
+     * Provides validator awareness.
+     */
+    use ValidatorAwareTrait {
+        ValidatorAwareTrait::_getValidator as _getSessionValidator;
+        ValidatorAwareTrait::_setValidator as _setSessionValidator;
+    }
+
+    /*
+     * Provides capability to create invalid argument exceptions.
+     *
+     * @since [*next-version*]
+     */
     use CreateInvalidArgumentExceptionCapableTrait;
 
+    /**
+     * Provides the ability to translate and format strings.
+     *
+     * @since [*next-version*]
+     */
     use StringTranslatingTrait;
 
     /**

@@ -2,7 +2,7 @@
 
 namespace RebelCode\Sessions\UnitTest;
 
-use DateTime;
+use Dhii\Validation\ValidatorInterface;
 use RebelCode\Sessions\SessionGenerator;
 use Xpmock\TestCase;
 
@@ -33,6 +33,21 @@ class SessionGeneratorTest extends TestCase
     }
 
     /**
+     * Creates a session validator for testing purposes.
+     *
+     * @since [*next-version*]
+     *
+     * @return ValidatorInterface
+     */
+    public function createSessionValidator()
+    {
+        $mock = $this->mock('Dhii\Validation\ValidatorInterface')
+            ->validate();
+
+        return $mock->new();
+    }
+
+    /**
      * Tests whether a valid instance of the test subject can be created.
      *
      * @since [*next-version*]
@@ -40,6 +55,25 @@ class SessionGeneratorTest extends TestCase
     public function testCanBeCreated()
     {
         $subject = new SessionGenerator($this->createSessionFactory(), 0);
+
+        $this->assertInstanceOf(
+            'RebelCode\\Sessions\\SessionGeneratorInterface', $subject,
+            'Test subject does not implement expected interface.'
+        );
+    }
+
+    /**
+     * Tests whether a valid instance of the test subject can be created.
+     *
+     * @since [*next-version*]
+     */
+    public function testConstructorArguments()
+    {
+        $lengths = [600, 800, 1200];
+        $padding = rand(0, 60);
+        $validator = $this->createSessionValidator();
+        $subject = new SessionGenerator($this->createSessionFactory(), $lengths, $padding, $validator);
+        $reflect = $this->reflect($subject);
 
         $this->assertInstanceOf(
             'RebelCode\\Sessions\\SessionGeneratorInterface', $subject,
