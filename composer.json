@@ -14,7 +14,9 @@
     "require": {
         "php": "^5.4 | ^7.0",
         "rebelcode/session-generator-interface": "dev-task/initial-interfaces",
-        "dhii/validation-interface": "^0.1.0"
+        "dhii/validation-interface": "^0.1.0",
+        "dhii/exception-helper-base": "dev-task/initial-classes",
+        "dhii/i18n-helper-base": "dev-develop"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
