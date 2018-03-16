@@ -2,7 +2,8 @@
 
 namespace RebelCode\Sessions\UnitTest;
 
-use Dhii\Util\Invocation\InvocableInterface;
+use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use Dhii\Invocation\InvocableInterface;
 use Dhii\Validation\ValidatorInterface;
 use RebelCode\Sessions\AbstractSessionGenerator;
 use Traversable;
@@ -102,17 +103,52 @@ class AbstractSessionGeneratorTest extends TestCase
      */
     public function createInvocable()
     {
-        $mock = $this->mock('Dhii\Util\Invocation\InvocableInterface')
-                      ->__invoke();
+        $mock = $this->mock('Dhii\Invocation\InvocableInterface')
+                     ->__invoke();
 
         return $mock->new();
     }
 
     public function createValidationFailedException()
     {
-        $mock = $this->mock('Dhii\Validation\Exception\ValidationFailedException');
+        $mock = $this->mockClassAndInterfaces(
+            'Exception',
+            [
+                'Dhii\Validation\Exception\ValidationFailedExceptionInterface',
+            ]
+        );
 
-        return $mock->new();
+        return $mock;
+    }
+
+    /**
+     * Creates a mock that both extends a class and implements interfaces.
+     *
+     * This is particularly useful for cases where the mock is based on an
+     * internal class, such as in the case with exceptions. Helps to avoid
+     * writing hard-coded stubs.
+     *
+     * @since [*next-version*]
+     *
+     * @param string   $className      Name of the class for the mock to extend.
+     * @param string[] $interfaceNames Names of the interfaces for the mock to implement.
+     *
+     * @return MockObject The object that extends and implements the specified class and interfaces.
+     */
+    public function mockClassAndInterfaces($className, $interfaceNames = [])
+    {
+        $paddingClassName = uniqid($className);
+        $definition = vsprintf(
+            'abstract class %1$s extends %2$s implements %3$s {}',
+            [
+                $paddingClassName,
+                $className,
+                implode(', ', $interfaceNames),
+            ]
+        );
+        eval($definition);
+
+        return $this->getMockForAbstractClass($paddingClassName);
     }
 
     /**
@@ -142,7 +178,7 @@ class AbstractSessionGeneratorTest extends TestCase
         $subject = $this->createInstance(
             [600],
             0,
-            function ($start, $end) {
+            function($start, $end) {
                 return [$start, $end];
             },
             null,
@@ -178,7 +214,7 @@ class AbstractSessionGeneratorTest extends TestCase
         $subject = $this->createInstance(
             [480],
             120,
-            function ($start, $end) {
+            function($start, $end) {
                 return [$start, $end];
             },
             null,
@@ -211,7 +247,7 @@ class AbstractSessionGeneratorTest extends TestCase
      */
     public function testGenerateValidation()
     {
-        $factory = function () {
+        $factory = function() {
             return;
         };
         $validator = $this->createValidator();
@@ -245,7 +281,7 @@ class AbstractSessionGeneratorTest extends TestCase
      */
     public function testGenerateValidationFailedCallback()
     {
-        $factory = function () {
+        $factory = function() {
             return;
         };
         $validator = $this->createValidator();
