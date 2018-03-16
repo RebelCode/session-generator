@@ -14,7 +14,7 @@
     "require": {
         "php": "^5.4 | ^7.0",
         "rebelcode/session-generator-interface": "dev-develop",
-        "dhii/validation-interface": "0.2-alpha2",
+        "dhii/validation-interface": "^0.1 | 0.2-alpha1 | 0.2-alpha2",
         "dhii/exception": "0.1-alpha4",
         "dhii/i18n-helper-base": "0.1-alpha1"
     },
@@ -23,7 +23,6 @@
         "ptrofimov/xpmock": "^1.1",
         "dhii/php-cs-fixer-config": "^0.1",
         "codeclimate/php-test-reporter": "<=0.3.2",
-
         "dhii/invocable-interface": "0.1-alpha1"
     },
     "autoload": {
