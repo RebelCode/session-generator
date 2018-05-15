@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/test/functional" isTestSource="true" packagePrefix="RebelCode\Sessions\FuncTest\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/codeclimate/php-test-reporter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/args-list-validation" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/callback-abstract" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/container-helper-base" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/data-container-abstract" />
@@ -20,9 +21,12 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/i18n-interface" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/invocable-base" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/invocable-interface" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/iterator-helper-base" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/normalization-helper-base" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/php-cs-fixer-config" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/stringable-interface" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/validation-abstract" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/validation-base" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dhii/validation-interface" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofphp/php-cs-fixer" />

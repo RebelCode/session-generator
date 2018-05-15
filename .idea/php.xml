@@ -55,6 +55,10 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
       <path value="$PROJECT_DIR$/vendor/satooshi/php-coveralls" />
       <path value="$PROJECT_DIR$/vendor/codeclimate/php-test-reporter" />
+      <path value="$PROJECT_DIR$/vendor/dhii/args-list-validation" />
+      <path value="$PROJECT_DIR$/vendor/dhii/validation-abstract" />
+      <path value="$PROJECT_DIR$/vendor/dhii/validation-base" />
+      <path value="$PROJECT_DIR$/vendor/dhii/iterator-helper-base" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="5.4.0" />
