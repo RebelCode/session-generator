@@ -31,6 +31,12 @@
             "RebelCode\\Sessions\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "RebelCode\\Sessions\\UnitTest\\": "test/unit",
+            "RebelCode\\Sessions\\FuncTest\\": "test/functional"
+        }
+    },
     "scripts": {
         "test": "phpunit",
         "csfix": "php-cs-fixer fix -vvv"
