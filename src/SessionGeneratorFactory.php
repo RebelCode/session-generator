@@ -7,11 +7,19 @@ use Dhii\Data\Container\ContainerHasCapableTrait;
 use Dhii\Data\Container\CreateContainerExceptionCapableTrait;
 use Dhii\Data\Container\CreateNotFoundExceptionCapableTrait;
 use Dhii\Data\Container\NormalizeKeyCapableTrait;
+use Dhii\Exception\CreateInternalExceptionCapableTrait;
 use Dhii\Exception\CreateInvalidArgumentExceptionCapableTrait;
 use Dhii\Exception\CreateOutOfRangeExceptionCapableTrait;
 use Dhii\Factory\AbstractBaseCallbackFactory;
 use Dhii\I18n\StringTranslatingTrait;
+use Dhii\Invocation\CreateReflectionForCallableCapableTrait;
+use Dhii\Invocation\NormalizeCallableCapableTrait;
+use Dhii\Invocation\NormalizeMethodCallableCapableTrait;
+use Dhii\Invocation\ValidateParamsCapableTrait;
 use Dhii\Util\Normalization\NormalizeStringCapableTrait;
+use Dhii\Validation\CreateValidationFailedExceptionCapableTrait;
+use ReflectionFunction;
+use ReflectionMethod;
 
 /**
  * A factory implementation that can create {@see SessionGenerator} instances.
@@ -34,6 +42,12 @@ class SessionGeneratorFactory extends AbstractBaseCallbackFactory implements Ses
      */
     use ContainerHasCapableTrait;
 
+    /* @since [*next-version*] */
+    use ValidateParamsCapableTrait;
+
+    /* @since [*next-version*] */
+    use CreateReflectionForCallableCapableTrait;
+
     /*
      * Provides key normalization functionality.
      *
@@ -47,6 +61,12 @@ class SessionGeneratorFactory extends AbstractBaseCallbackFactory implements Ses
      * @since [*next-version*]
      */
     use NormalizeStringCapableTrait;
+
+    /* @since [*next-version*] */
+    use NormalizeCallableCapableTrait;
+
+    /* @since [*next-version*] */
+    use NormalizeMethodCallableCapableTrait;
 
     /*
      * Provides functionality for creating container exceptions.
@@ -75,6 +95,12 @@ class SessionGeneratorFactory extends AbstractBaseCallbackFactory implements Ses
      * @since [*next-version*]
      */
     use CreateOutOfRangeExceptionCapableTrait;
+
+    /* @since [*next-version*] */
+    use CreateInternalExceptionCapableTrait;
+
+    /* @since [*next-version*] */
+    use CreateValidationFailedExceptionCapableTrait;
 
     /*
      * Provides string translation functionality.
@@ -140,5 +166,25 @@ class SessionGeneratorFactory extends AbstractBaseCallbackFactory implements Ses
 
             return new SessionGenerator($sessionFactory, $sessionLengths, $paddingTime, $sessionValidator);
         };
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @since [*next-version*]
+     */
+    protected function _createReflectionFunction($functionName)
+    {
+        return new ReflectionFunction($functionName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @since [*next-version*]
+     */
+    protected function _createReflectionMethod($className, $methodName)
+    {
+        return new ReflectionMethod($className, $methodName);
     }
 }
