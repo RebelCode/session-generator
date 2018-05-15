@@ -21,6 +21,24 @@ class SessionGeneratorFactoryTest extends TestCase
     const TEST_SUBJECT_CLASSNAME = 'RebelCode\Sessions\SessionGeneratorFactory';
 
     /**
+     * Creates a new instance of teh test subject.
+     *
+     * @since [*next-version*]
+     *
+     * @param array|null $methods The methods to mock.
+     *
+     * @return MockObject|TestSubject The new instance.
+     */
+    public function createInstance($methods = [])
+    {
+        $mock = $this->getMockBuilder(static::TEST_SUBJECT_CLASSNAME)
+            ->setMethods($methods)
+            ->getMock();
+
+        return $mock;
+    }
+
+    /**
      * Creates a mock validator instance.
      *
      * @since [*next-version*]
@@ -39,7 +57,7 @@ class SessionGeneratorFactoryTest extends TestCase
      */
     public function testCanBeCreated()
     {
-        $subject = new TestSubject();
+        $subject = $this->createInstance(null);
 
         $this->assertInstanceOf(
             'RebelCode\Sessions\SessionGeneratorFactoryInterface',
@@ -50,7 +68,7 @@ class SessionGeneratorFactoryTest extends TestCase
 
     public function testMake()
     {
-        $subject = new TestSubject();
+        $subject = $this->createInstance(null);
 
         $config = [
             TestSubject::K_CFG_SESSION_FACTORY => function() {},
@@ -100,9 +118,9 @@ class SessionGeneratorFactoryTest extends TestCase
 
     public function testMakeOnlyOptionalConfig()
     {
-        $subject = new TestSubject();
+        $subject = $this->createInstance(null);
 
-        $this->setExpectedException('Dhii\Factory\Exception\CouldNotMakeExceptionInterface');
+        $this->setExpectedException('Dhii\Factory\Exception\FactoryExceptionInterface');
 
         $config = [
             TestSubject::K_CFG_PADDING_TIME => 0,
@@ -114,9 +132,9 @@ class SessionGeneratorFactoryTest extends TestCase
 
     public function testMakeNoConfig()
     {
-        $subject = new TestSubject();
+        $subject = $this->createInstance(null);
 
-        $this->setExpectedException('Dhii\Factory\Exception\CouldNotMakeExceptionInterface');
+        $this->setExpectedException('Dhii\Factory\Exception\FactoryExceptionInterface');
 
         $subject->make();
     }
