@@ -70,6 +70,10 @@ abstract class AbstractSessionGenerator
 
         $newStartTimes = [];
         foreach ($startTimes as $_start) {
+            if (isset($processed[$_start])) {
+                continue;
+            }
+
             foreach ($lengths as $_length) {
                 // Calculate end of session from range start time
                 $_sessionEnd = $_start + $_length;
@@ -87,23 +91,22 @@ abstract class AbstractSessionGenerator
                     if ($validator !== null) {
                         $validator->validate($session);
                     }
-                    $results[]          = $session;
-                    $processed[$_start] = true;
+                    $results[] = $session;
                 } catch (ValidationFailedExceptionInterface $exception) {
                     if ($invalidCb !== null) {
                         call_user_func_array($invalidCb, [$session, $exception]);
                     }
                 }
 
-                // Calculate the next start time for recursion, skipping if already generated
+                // Calculate the next start time for recursion
                 $_next = $_sessionEnd + $padding;
-
-                if (isset($processed[$_next])) {
-                    continue;
+                // Skip if already processed
+                if (!isset($processed[$_next])) {
+                    $newStartTimes[] = $_next;
                 }
-
-                $newStartTimes[] = $_next;
             }
+
+            $processed[$_start] = true;
         }
 
         $startTimes = $newStartTimes;
