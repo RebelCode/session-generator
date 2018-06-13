@@ -345,4 +345,47 @@ class AbstractSessionGeneratorTest extends TestCase
 
         $reflect->_generate($start, $end);
     }
+
+    /**
+     * Tests the session generation functionality
+     *
+     * @since [*next-version*]
+     */
+    public function testGenerateMultipleLengths()
+    {
+        $factory = function($start, $end) {
+            return [$start, $end];
+        };
+        $validator = $this->createValidator();
+        $invalidCb = $this->createInvocable();
+
+        // 1 hour range
+        $start   = strtotime('01/08/2018 08:00');
+        $end     = strtotime('01/08/2018 10:00');
+        $lengths = [
+            30 * 60, // 30 minutes minute
+            60 * 60, // 1 hour
+        ];
+        // Should generate 7 * 60 = 420 sessions
+
+        $subject = $this->createMock()
+                        ->_getSessionLengths($lengths)
+                        ->_getPaddingTime(0)
+                        ->_getSessionFactory($this->returnValue($factory))
+                        ->_getSessionValidator($validator)
+                        ->_getOnSessionInvalidCallback($this->returnValue($invalidCb))
+                        ->new();
+
+        $reflect = $this->reflect($subject);
+        $results = $reflect->_generate($start, $end);
+
+        foreach ($results as $_result) {
+            $_start = date(DATE_ATOM, $_result[0]);
+            $_end   = date(DATE_ATOM, $_result[1]);
+
+            echo "$_start - $_end\n";
+        }
+
+        $this->assertEquals(7, count($results));
+    }
 }
