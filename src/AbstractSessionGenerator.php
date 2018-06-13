@@ -26,16 +26,13 @@ abstract class AbstractSessionGenerator
      */
     protected function _generate($start, $end)
     {
-        $results   = [];
         $lengths   = $this->_getSessionLengths();
         $padding   = $this->_getPaddingTime();
         $validator = $this->_getSessionValidator();
         $factory   = $this->_getSessionFactory();
         $invalidCb = $this->_getOnSessionInvalidCallback();
 
-        $this->_generateRecursive($start, $end, $lengths, $padding, $factory, $validator, $invalidCb, $results);
-
-        return $results;
+        return $this->_generateRecursive($start, $end, $lengths, $padding, $factory, $validator, $invalidCb);
     }
 
     /**
@@ -46,16 +43,15 @@ abstract class AbstractSessionGenerator
      *
      * @since [*next-version*]
      *
-     * @param int                     $start     The range's starting timestamp.
-     * @param int                     $end       The range's ending timestamp.
-     * @param array|Traversable       $lengths   The length of the sessions to generate, in seconds.
-     * @param int                     $padding   The padding time between sessions, in seconds.
-     * @param callable                $factory   The session factory callable.
-     * @param ValidatorInterface|null $validator Optional session validator.
-     * @param callable|null           $invalidCb Optional callback to invoke for invalid sessions.
-     * @param array|ArrayAccess       $results   The list of generated sessions to populate.
-     * @param array|ArrayAccess       $processed A list containing the starting times that have already been
-     *                                           processed, to avoid repeating specific recursive passes.
+     * @param int                     $start      The range's starting timestamp.
+     * @param int                     $end        The range's ending timestamp.
+     * @param array|Traversable       $lengths    The length of the sessions to generate, in seconds.
+     * @param int                     $padding    The padding time between sessions, in seconds.
+     * @param callable                $factory    The session factory callable.
+     * @param ValidatorInterface|null $validator  Optional session validator.
+     * @param callable|null           $invalidCb  Optional callback to invoke for invalid sessions.
+     *
+     * @return array An array of generated sessions.
      */
     protected function _generateRecursive(
         $start,
@@ -64,54 +60,59 @@ abstract class AbstractSessionGenerator
         $padding,
         callable $factory,
         ValidatorInterface $validator = null,
-        callable $invalidCb = null,
-        &$results = [],
-        &$processed = []
+        callable $invalidCb = null
     ) {
-        foreach ($lengths as $_length) {
-            // Calculate end of session from range start time
-            $_sessionEnd = $start + $_length;
+        $startTimes = [$start];
+        $results    = [];
+        $processed  = [];
 
-            // If exceeded range end, no more iteration is needed.
-            if ($_sessionEnd > $end) {
-                break;
-            }
+        GENERATE_SESSIONS:
 
-            // Create session using the factory
-            $session = call_user_func_array($factory, [$start, $_sessionEnd]);
+        $newStartTimes = [];
+        foreach ($startTimes as $_start) {
+            foreach ($lengths as $_length) {
+                // Calculate end of session from range start time
+                $_sessionEnd = $_start + $_length;
 
-            try {
-                // Validate session and add to results
-                if ($validator !== null) {
-                    $validator->validate($session);
+                // If exceeded range end, no more iteration is needed.
+                if ($_sessionEnd > $end) {
+                    break;
                 }
-                $results[]         = $session;
-                $processed[$start] = true;
-            } catch (ValidationFailedExceptionInterface $exception) {
-                if ($invalidCb !== null) {
-                    call_user_func_array($invalidCb, [$session, $exception]);
+
+                // Create session using the factory
+                $session = call_user_func_array($factory, [$_start, $_sessionEnd]);
+
+                try {
+                    // Validate session and add to results
+                    if ($validator !== null) {
+                        $validator->validate($session);
+                    }
+                    $results[]          = $session;
+                    $processed[$_start] = true;
+                } catch (ValidationFailedExceptionInterface $exception) {
+                    if ($invalidCb !== null) {
+                        call_user_func_array($invalidCb, [$session, $exception]);
+                    }
                 }
+
+                // Calculate the next start time for recursion, skipping if already generated
+                $_next = $_sessionEnd + $padding;
+
+                if (isset($processed[$_next])) {
+                    continue;
+                }
+
+                $newStartTimes[] = $_next;
             }
-
-            // Calculate the next start time for recursion, skipping if already generated
-            $_next = $_sessionEnd + $padding;
-
-            if (isset($processed[$_next])) {
-                continue;
-            }
-
-            $this->_generateRecursive(
-                $_next,
-                $end,
-                $lengths,
-                $padding,
-                $factory,
-                $validator,
-                $invalidCb,
-                $results,
-                $processed
-            );
         }
+
+        $startTimes = $newStartTimes;
+
+        if (count($newStartTimes) === 0) {
+            return $results;
+        }
+
+        goto GENERATE_SESSIONS;
     }
 
     /**
