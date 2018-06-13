@@ -311,4 +311,38 @@ class AbstractSessionGeneratorTest extends TestCase
 
         $reflect->_generate($start, $end);
     }
+
+    /**
+     * Tests the session generation functionality
+     *
+     * @since [*next-version*]
+     */
+    public function testGenerateBeyondNestingLevel()
+    {
+        $factory = function() {
+            return;
+        };
+        $validator = $this->createValidator();
+        $invalidCb = $this->createInvocable();
+
+        // 7 hour range
+        $start   = strtotime('01/08/2018 08:00');
+        $end     = strtotime('01/08/2018 15:00');
+        $lengths = [
+            1 * 60, // 1 minute
+        ];
+        // Should generate 7 * 60 = 420 sessions
+
+        $subject = $this->createMock()
+                        ->_getSessionLengths($lengths)
+                        ->_getPaddingTime(0)
+                        ->_getSessionFactory($this->returnValue($factory))
+                        ->_getSessionValidator($validator)
+                        ->_getOnSessionInvalidCallback($this->returnValue($invalidCb))
+                        ->new();
+
+        $reflect = $this->reflect($subject);
+
+        $reflect->_generate($start, $end);
+    }
 }
